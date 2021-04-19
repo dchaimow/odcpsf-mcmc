@@ -5,13 +5,13 @@ Chaimow, D., Yacoub, E., Uğurbil, K. & Shmuel, A. Spatial specificity of the fu
 
 `processMCMC.m` - script that demonstrates how to run MCMC on processed ODC fMRI data (makes some assumptions as to how fMRI results are saved, see [loadDataForFitting.m](+runMCMC/private/loadDataForFitting.m))
 
-`odcpsfMCMC` - contains the main code of the model and of the MCMC algorithm
+`odcpsfMCMC` - the main code of the model and of the MCMC algorithm
 
-`+runMCMC` - contains code involved in starting and running MCMC jobs locally or on an HPC cluster
+`+runMCMC` - code involved in starting and running MCMC jobs locally or on an HPC cluster
 
-`+tests` - contains tests
+`+tests` - tests
 
-`+tools` - contains some helper functions
+`+tools` - some helper functions
 
 
 
