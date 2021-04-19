@@ -13,6 +13,8 @@ Chaimow, D., Yacoub, E., Uğurbil, K. & Shmuel, A. Spatial specificity of the fu
 
 `+tools` - some helper functions
 
+`data` - examplary processed fMRI data: GE and SE maps from subject 1 in Chaimow et al. (2018), used as an example in processMCMC.m
+
 ## General description
 
 The generative model of fMRI of ODCs is implemented in [computeODCModel.m](odcpsfMCMC/computeODCModel.m) (and [computeODCModelSimultaneous.m](odcpsfMCMC/computeODCModelSimultaneous.m)). This function simulates ODC fMRI maps given a set of parameters and also computes the energy and the gradient given real fMRI data.
