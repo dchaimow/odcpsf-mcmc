@@ -4,7 +4,6 @@
 %processSubject('s2');
 
 addpath('odcpsfMCMC');
-
 jobDescription = 'test';
 
 %% run MCMC
@@ -45,6 +44,11 @@ jobSimultaneous = ...
 %     runMCMC.runTasks(tasks.(jobNameSingle),jobNameSingle);
 % tasks.(jobNameSimultaneous) = ...
 %     runMCMC.runTasks(tasks.(jobNameSimultaneous),jobNameSimultaneous);
+
+% optional: wait for tasks to finish, then visualize
+while isempty(jobSingle.FinishDateTime) || ...
+        ~isempty(jobSimultaneous.FinishDateTime)
+end
 
 % visualize results
 mkdir figures;

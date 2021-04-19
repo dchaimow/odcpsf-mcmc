@@ -1,7 +1,7 @@
 function [diffMap, roi, beta, noiseLevel, filterCutoffs] = ...
     loadDataForFitting(sesname, noBVMaskFlag, removeMean)
 addpath('../..');
-dataDir = fullfile('~/Data/psfodc/ses');
+dataDir = fullfile('data');
 subjName = sesname(1:2);
 sesDataDir = fullfile(dataDir,sesname);
 subjDataDir = fullfile(dataDir,subjName);
