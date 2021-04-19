@@ -41,3 +41,7 @@ Generally, in order to run MCMC model fitting on real data:
 3. Running MCMC on the model basically means that (e.g. see [runSingleMCMCTaskLocal](+runMCMC/runSingleMCMCTaskLocal.m)):
    1. The task structure is initialized by passing it to  [initializeTask.m](odcpsfMCMC/dcHMCRunOnce.m) in order to prepare it for MCMC sampling
    2. The HMC sampling algorithm is called iteratively with a function handle that has been generated in i. by wrapping [computeODCModel.m](odcpsfMCMC/computeODCModel.m) using [modelF.m](odcpsfMCMC/modelF.m) with the current set of parameters in a parameter vector and the current energy and gradient value. It will then sample a new parameter vector and also return the new energy and gradient 
+
+A lot of the code was meant to submit and run jobs on Guillimin, a now decomissioned HPC cluster at McGill. Alternatively it can be run by submitting jobs to a local worker via matlab parallel computing toolbox or even by running it directly (e.g. [runSingleMCMCTaskLocal.m](+runMCMC/runSingleMCMCTaskLocal.m). 
+
+The general philosophy is that a structure `task` always contains the current state of the sampling process including the state of the random number generator and all accumulated sampled data. On the HPC cluster it is being saved to disk periodically. Whenever jobs crash or additional sampling is required, the algorithm can simply pickup from whatever state the task structure was in.
