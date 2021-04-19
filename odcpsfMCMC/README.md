@@ -22,14 +22,27 @@ Used in  `makeFFT2Symmetric.m`.
 
 ## MCMC implementation
 
-### dcHMCRunOnce.m
+### `dcHMCRunOnce.m`
 Implementation of Hamiltonian (Hybrid)  Monte Carlo. Expects a function handle to a function [E,g] = f(x), with x being a vector of parameters, and E and g being the energy and the gradient of the model.
 
-## Functions that run MCMC using ODC Model
+## Functions that run MCMC using ODC Model (self contained code that would run on HPC cluster)
 
+# make.sh
+Compilation script, compiles code before running on HPC cluster.
 
+# odcpsfmcmc.m
+Main function started on HPC cluster, calls `runSingleMCMCTask.m`. 
 
-### initializeTask.m 
+# odcpsfmcmcMultiThreaded.m
+Alternative version using multithreaded compilation.
+
+# restart_jobs.sh
+Shell script to restart aborted jobs in HPC cluster.
+
+### `runSingleMCMCTask.m`
+Runs MCMC task by first running `initializeTask.m`, then looping over `dcHMCRunOnce.m`, managing, saving and visualizing results in between.
+
+### `initializeTask.m`
 takes a task structure and prepares it for running MCMC on it by
 - increasing simulation space to twice the data size (in order to avoid periodicity artefacts)
 - setting up simulation grid using setupsim
@@ -38,83 +51,53 @@ takes a task structure and prepares it for running MCMC on it by
 - setting up energy function handle to pass to MCMC algorithm
 - initializing sampling variables and counters
 
-uses:
-computeODCModel.m
-computeODCModelSimultaneous.m
-modelF.m
-modelFSimultaneous.m
-mypadarray.m 
-parametersToVector.m
-parametersToVectorSimultaneous.m
-setupsim.m
-vectorToParameters.m
-vectorToParametersSimultaneous.m
-
-
-### modelF.m
+### `modelF.m`
 wraps computeODCModel.m to use it as an energy function as required by dcHMCRunOnce.m
 
-### modelFSimultaneous.m
+### `modelFSimultaneous.m`
 wraps computeODCModelSimultaneous.m to use it as an energy function as required by dcHMCRunOnce.m
 
 
-## runSingleMCMCTask.m
-Runs MCMC task
+### Helper functions
+`mypadarray.m`
+`parametersToVector.m`
+`parametersToVectorSimultaneous.m`
+`setupsim.m`
+`vectorToParameters.m`
+`vectorToParametersSimultaneous.m`
+`dcupsample.m`
 
+## Visualization functions
 
+### `visualizeMCDependencies.m`
 
-### Helper function 
-mypadarray.m
-parametersToVector.m
-parametersToVectorSimultaneous.m
-setupsim.m
-vectorToParameters.m
-vectorToParametersSimultaneous.m
+### `visualizeMCDependenciesSimultaneous.m`
 
+### `visualizeMCGoF.m`
 
-## Visualization functions (used in ...?)
+### `visualizeMCGoFSimultaneous.m`
 
-### bwrLinCMap.mat
+### `visualizeMCHist.m`
+
+### `visualizeMCHistSimultaneous.m`
+
+### `visualizeMCSamples.m`
+
+### `visualizeMCSamplesSimultaneous.m`
+
+### `visualizeResults.m`
+
+### `displayResults.m`
+
+### `displayResultsForTask.m`
+
+### Helper functions
+
+#### `bwrLinCMap.mat`
 Colormap used in visualizing ODC maps.
 
-### dcprintfig.m
+#### `dcprintfig.m`
 Helper function to exports a figure.
 
-
-
-# imagebw.m
-
-# make.sh
-# modelF.m
-# modelFSimultaneous.m
-# mypadarray.m
-# odcpsfmcmc.m
-# odcpsfmcmcMultiThreaded.m
-# parametersToVector.m
-# parametersToVectorSimultaneous.m
-# restart_jobs.sh
-
-# setupsim.m
-
-
-
-
-### dcupsample.m
-2D upsampling by zero padding in spatial frequency space.
-(used by initializeTask to initialize starting state of noise parameter by upsampling MRI map)
-
-# vectorToParameters.m
-# vectorToParametersSimultaneous.m
-# visualizeMCDependencies.m
-# visualizeMCDependenciesSimultaneous.m
-# visualizeMCGoF.m
-# visualizeMCGoFSimultaneous.m
-# visualizeMCHist.m
-# visualizeMCHistSimultaneous.m
-# visualizeMCSamples.m
-# visualizeMCSamplesSimultaneous.m
-# visualizeResults.m
-
-
-# displayResults.m
-# displayResultsForTask.m
+#### `imagebw.m`
+Display black and white map.
