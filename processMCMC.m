@@ -3,12 +3,15 @@
 %processSubject('s1');
 %processSubject('s2');
 
+addpath('odcpsfMCMC');
+
 jobDescription = 'test';
 
 %% run MCMC
-runMCMC.uploadAndCompile();
+%upload and compile on HPC cluster
+%runMCMC.uploadAndCompile();
 
-nSamples = 1000;
+nSamples = 100; % 100 for testing, otherwise use 1000
 nThin = 1;
 rhoLimits = [0.37 0.77];
 omegaLimits = [0.3 2];
@@ -42,3 +45,11 @@ jobSimultaneous = ...
 %     runMCMC.runTasks(tasks.(jobNameSingle),jobNameSingle);
 % tasks.(jobNameSimultaneous) = ...
 %     runMCMC.runTasks(tasks.(jobNameSimultaneous),jobNameSimultaneous);
+
+% visualize results
+mkdir figures;
+resultsFilenames = dir('odcpsf_MCMC_results_1*.mat');
+load(resultsFilenames(1).name,'results');
+visualizeResults(results,'figures');
+load(resultsFilenames(2).name,'results');
+visualizeResults(results,'figures');
