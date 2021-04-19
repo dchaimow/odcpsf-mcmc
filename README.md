@@ -3,17 +3,17 @@ Matlab code to fit a model of ODCs to fMRI data using MCMC as used in:
 
 Chaimow, D., Yacoub, E., Uğurbil, K. & Shmuel, A. Spatial specificity of the functional MRI blood oxygenation response relative to neuronal activity. Neuroimage 164, 32–47 (2018).
 
-`processMCMC.m` - script that demonstrates how to run MCMC on processed ODC fMRI data (makes some assumptions as to how fMRI results are saved, see [loadDataForFitting.m](+runMCMC/private/loadDataForFitting.m)) and visualizes results.
+[`processMCMC.m`](processMCMC.m) - script that demonstrates how to run MCMC on processed ODC fMRI data (makes some assumptions as to how fMRI results are saved, see [loadDataForFitting.m](+runMCMC/private/loadDataForFitting.m)) and visualizes results.
 
-`odcpsfMCMC` - the main code of the model and of the MCMC algorithm
+[`odcpsfMCMC`](odcpsfMCMC) - the main code of the model and of the MCMC algorithm
 
-`+runMCMC` - code involved in starting and running MCMC jobs locally or on an HPC cluster
+[`+runMCMC`](+runMCMC) - code involved in starting and running MCMC jobs locally or on an HPC cluster
 
-`+tests` - tests
+[`+tests`](+tests) - tests
 
-`+tools` - some helper functions
+[`+tools`](tools) - some helper functions
 
-`data` - examplary processed fMRI data: GE and SE maps from subject 1 in Chaimow et al. (2018), used as an example in processMCMC.m
+[`data`](data) - examplary processed fMRI data: GE and SE maps from subject 1 in Chaimow et al. (2018), used as an example in processMCMC.m
 
 ## General description
 
@@ -42,6 +42,6 @@ Generally, in order to run MCMC model fitting on real data:
    1. The task structure is initialized by passing it to  [initializeTask.m](odcpsfMCMC/dcHMCRunOnce.m) in order to prepare it for MCMC sampling
    2. The HMC sampling algorithm is called iteratively with a function handle that has been generated in i. by wrapping [computeODCModel.m](odcpsfMCMC/computeODCModel.m) using [modelF.m](odcpsfMCMC/modelF.m) with the current set of parameters in a parameter vector and the current energy and gradient value. It will then sample a new parameter vector and also return the new energy and gradient 
 
-A lot of the code was meant to submit and run jobs on Guillimin, a now decomissioned HPC cluster at McGill. Alternatively it can be run by submitting jobs to a local worker via matlab parallel computing toolbox or even by running it directly (e.g. [runSingleMCMCTaskLocal.m](+runMCMC/runSingleMCMCTaskLocal.m). 
+A lot of the code was meant to submit and run jobs on Guillimin, a now decomissioned HPC cluster at McGill. Alternatively it can be run by submitting jobs to a local worker via matlab parallel computing toolbox or even by running it directly (e.g. [runSingleMCMCTaskLocal.m](+runMCMC/runSingleMCMCTaskLocal.m)). 
 
 The general philosophy is that a structure `task` always contains the current state of the sampling process including the state of the random number generator and all accumulated sampled data. On the HPC cluster it is being saved to disk periodically. Whenever jobs crash or additional sampling is required, the algorithm can simply pickup from whatever state the task structure was in.
